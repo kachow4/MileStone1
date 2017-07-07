@@ -11,7 +11,6 @@
 
 */
 
-
 //clipping indicator variables
 boolean clipping = 0;
 
@@ -39,13 +38,9 @@ byte maxAmp = 0;
 byte checkMaxAmp;
 byte ampThreshold = 50;//raise if you have a very noisy signal
 
-int ledPin = 9;
-
 void setup() {
 
   Serial.begin(9600);
-
-  pinMode(ledPin, OUTPUT);
 
   pinMode(13, OUTPUT); //led indicator pin
   pinMode(12, OUTPUT); //output pin
@@ -138,8 +133,6 @@ ISR(ADC_vect) {//when new ADC value ready
     checkMaxAmp = maxAmp;
     maxAmp = 0;
   }
-  
-  //Cfrequencies[19] = {7692, 4273, 2747, 2024, 1672, 1602, 1373, 1165, 1039, 915, 894, 739, 641, 591, 582, 557, 512, 437, 346}; 
 }
 
 void reset() { //clea out some variables
@@ -147,7 +140,6 @@ void reset() { //clea out some variables
   noMatch = 0;//reset match couner
   maxSlope = 0;//reset slope
 }
-
 
 void checkClipping() { //manage clipping indicator LED
   if (clipping) { //if currently clipping
@@ -159,10 +151,6 @@ void checkClipping() { //manage clipping indicator LED
 int C4frequencies[14] = {267, 265, 263, 261, 159, 158, 132, 131, 77, 76, 46, 32, 29, 13};  //261.6 Hz 265.26
 int G4frequencies[14] = {801, 784, 400, 396, 392, 272, 198, 196, 98, 97, 78, 65, 51, 43};  //392.0 Hz 396.52
 int C5frequencies[14] = {534, 526, 519, 259, 175, 174, 139, 123, 110, 104, 74, 52, 47, 40}; //523.3 Hz 526.88
-
-//int C4frequencies[10] = {267, 265, 263, 261, 159, 158, 132, 131, 21, 13};  //261.6 Hz 265.26
-//int G4frequencies[10] = {801, 784, 400, 396, 392, 198, 196, 98, 97, 51};  //392.0 Hz 396.52
-//int C5frequencies[10] = {534, 526, 519, 259, 174, 139, 123, 52, 47, 40}; //523.3 Hz 526.88
 
 void loop() {
 
@@ -187,23 +175,5 @@ void loop() {
   }
 
   delay(100);//delete this if you want
-
   //do other stuff here
 }
-
-/*Serial.println(volts);
-  if (volts >= 1.0)
-  {
-    //turn on LED
-    digitalWrite(ledPin, LOW);
-    delay(500);
-    Serial.println("Knock Knock");
-  }
-  else
-  {
-    //turn LED off
-    digitalWrite(ledPin, HIGH);
-  }
-}
-*/
-
