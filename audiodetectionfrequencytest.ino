@@ -11,6 +11,7 @@
 
 */
 
+
 //clipping indicator variables
 boolean clipping = 0;
 
@@ -38,9 +39,13 @@ byte maxAmp = 0;
 byte checkMaxAmp;
 byte ampThreshold = 50;//raise if you have a very noisy signal
 
+int ledPin = 9;
+
 void setup() {
 
   Serial.begin(9600);
+
+  pinMode(ledPin, OUTPUT);
 
   pinMode(13, OUTPUT); //led indicator pin
   pinMode(12, OUTPUT); //output pin
@@ -141,16 +146,13 @@ void reset() { //clea out some variables
   maxSlope = 0;//reset slope
 }
 
+
 void checkClipping() { //manage clipping indicator LED
   if (clipping) { //if currently clipping
     PORTB &= B11011111;//turn off clipping indicator led
     clipping = 0;
   }
 }
-
-int C4frequencies[14] = {267, 265, 263, 261, 159, 158, 132, 131, 77, 76, 46, 32, 29, 13};  //261.6 Hz 265.26
-int G4frequencies[14] = {801, 784, 400, 396, 392, 272, 198, 196, 98, 97, 78, 65, 51, 43};  //392.0 Hz 396.52
-int C5frequencies[14] = {534, 526, 519, 259, 175, 174, 139, 123, 110, 104, 74, 52, 47, 40}; //523.3 Hz 526.88
 
 void loop() {
 
@@ -161,19 +163,19 @@ void loop() {
     //print results
     Serial.print(frequency);
     Serial.println(" hz");
-    for(int i = 0; i < 13; i++){
-      if(frequency == C4frequencies[i]){
-        Serial.println("C4");
+    if(frequency >= 260 && frequency <= 265){
+      Serial.println("C4");
       }
-      if(frequency == G4frequencies[i]){
-        Serial.println("G4");
+    if(frequency >= 392 && frequency <= 396){
+      Serial.println("G4");
       }
-      if(frequency == C5frequencies[i]){
-        Serial.println("C5");
+    if(frequency >= 328 && frequency <= 331){
+      Serial.println("E4");
+      }
+    if(frequency >= 519 && frequency <= 539){
+      Serial.println("C5");
       }
     }
-  }
-
-  delay(100);//delete this if you want
-  //do other stuff here
+  delay(100);  //delete this if you want
 }
+
